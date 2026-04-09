@@ -1,0 +1,70 @@
+{
+  "Layout": {
+    "skipToContent": "Skip to main content"
+  },
+  "Header": {
+    "categories": "Categories",
+    "viewAllCategories": "View all categories",
+    "services": "Services",
+    "dashboard": "Dashboard",
+    "myProfile": "My profile",
+    "signOut": "Sign out",
+    "login": "Log in",
+    "register": "Sign up",
+    "createAccount": "Create account",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mobileAllCategories": "All categories →",
+    "sectionCategories": "Categories",
+    "sectionHelp": "Help",
+    "langLabel": "Language",
+    "langFr": "FR",
+    "langEn": "EN",
+    "cat": {
+      "design": "Design & graphics",
+      "developpement": "Development & tech",
+      "redaction": "Writing & translation",
+      "marketing": "Digital marketing",
+      "business": "Business & consulting",
+      "video": "Video & animation",
+      "audio": "Audio & music",
+      "photo": "Photography",
+      "formation": "Training & coaching"
+    },
+    "help": {
+      "faq": "FAQ",
+      "guideClient": "Buyer guide",
+      "guideSeller": "Seller guide",
+      "status": "Service status",
+      "releaseNotes": "Release notes",
+      "contact": "Contact us"
+    }
+  },
+  "Footer": {
+    "tagline": "The services marketplace built for Africa. Simple, secure, professional.",
+    "categories": "Categories",
+    "platform": "Platform",
+    "help": "Help",
+    "legal": "Legal",
+    "browseServices": "Browse services",
+    "becomeSeller": "Become a seller",
+    "howItWorks": "How it works",
+    "search": "Search",
+    "guideClient": "Buyer guide",
+    "guideSeller": "Seller guide",
+    "faq": "FAQ",
+    "status": "Service status",
+    "releaseNotes": "Release notes",
+    "contact": "Contact us",
+    "terms": "Terms of use",
+    "privacy": "Privacy policy",
+    "about": "About",
+    "ctaTitle": "Ready to get started?",
+    "ctaSubtitle": "Join thousands of professionals and clients across Africa.",
+    "ctaRegister": "Create account",
+    "ctaSeller": "Become a seller",
+    "copyright": "All rights reserved.",
+    "badgeSecure": "Secure payments",
+    "badgeSupport": "Responsive support"
+  }
+}

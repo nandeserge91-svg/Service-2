@@ -1,0 +1,70 @@
+{
+  "Layout": {
+    "skipToContent": "Aller au contenu principal"
+  },
+  "Header": {
+    "categories": "Catégories",
+    "viewAllCategories": "Voir toutes les catégories",
+    "services": "Services",
+    "dashboard": "Tableau de bord",
+    "myProfile": "Mon profil",
+    "signOut": "Déconnexion",
+    "login": "Connexion",
+    "register": "Inscription",
+    "createAccount": "Créer un compte",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "mobileAllCategories": "Toutes les catégories →",
+    "sectionCategories": "Catégories",
+    "sectionHelp": "Aide",
+    "langLabel": "Langue",
+    "langFr": "FR",
+    "langEn": "EN",
+    "cat": {
+      "design": "Design & Graphisme",
+      "developpement": "Développement & Tech",
+      "redaction": "Rédaction & Traduction",
+      "marketing": "Marketing Digital",
+      "business": "Business & Conseil",
+      "video": "Vidéo & Animation",
+      "audio": "Audio & Musique",
+      "photo": "Photographie",
+      "formation": "Formation & Coaching"
+    },
+    "help": {
+      "faq": "FAQ",
+      "guideClient": "Guide client",
+      "guideSeller": "Guide vendeur",
+      "status": "État des services",
+      "releaseNotes": "Notes de version",
+      "contact": "Nous contacter"
+    }
+  },
+  "Footer": {
+    "tagline": "La marketplace de services pensée pour l'Afrique. Simple, sécurisée, professionnelle.",
+    "categories": "Catégories",
+    "platform": "Plateforme",
+    "help": "Aide",
+    "legal": "Légal",
+    "browseServices": "Parcourir les services",
+    "becomeSeller": "Devenir vendeur",
+    "howItWorks": "Comment ça marche",
+    "search": "Rechercher",
+    "guideClient": "Guide client",
+    "guideSeller": "Guide vendeur",
+    "faq": "FAQ",
+    "status": "État des services",
+    "releaseNotes": "Notes de version",
+    "contact": "Nous contacter",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "about": "À propos",
+    "ctaTitle": "Prêt à démarrer ?",
+    "ctaSubtitle": "Rejoignez des milliers de professionnels et clients en Afrique.",
+    "ctaRegister": "Créer un compte",
+    "ctaSeller": "Devenir vendeur",
+    "copyright": "Tous droits réservés.",
+    "badgeSecure": "Paiement sécurisé",
+    "badgeSupport": "Support réactif"
+  }
+}
