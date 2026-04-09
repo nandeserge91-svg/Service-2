@@ -825,6 +825,72 @@ model FeatureFlag {
   updatedAt   DateTime @updatedAt
 }
 
+// ——— Multi-devises (Phase 8.1) ———
+
+model ExchangeRate {
+  id           String   @id @default(cuid())
+  baseCurrency String   @db.Char(3)  // ex. XOF
+  currency     String   @db.Char(3)  // ex. EUR
+  rate         Float                  // 1 base = rate target (ex. 0.00152)
+  inverseRate  Float                  // 1 target = inverseRate base
+  source       String   @default("MANUAL") // MANUAL, API
+  validFrom    DateTime @default(now())
+  validTo      DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([baseCurrency, currency, validFrom])
+  @@index([baseCurrency, currency])
+}
+
+model SupportedCurrency {
+  id        String   @id @default(cuid())
+  code      String   @unique @db.Char(3)
+  symbol    String
+  nameFr    String
+  nameEn    String
+  decimals  Int      @default(0)
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// ——— Fournisseurs paiement (Phase 8.2) ———
+
+model PaymentProvider {
+  id            String   @id @default(cuid())
+  slug          String   @unique // chariow, orange_money, mtn_momo
+  nameFr        String
+  nameEn        String
+  logoUrl       String?
+  active        Boolean  @default(true)
+  currencies    String[] @default([])  // ex. ["XOF","XAF"]
+  countries     String[] @default([])  // ex. ["CI","SN","CM"]
+  configJson    Json?    // provider-specific config (encrypted in prod)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ——— Configuration pays (Phase 8.3) ———
+
+model CountryConfig {
+  id              String   @id @default(cuid())
+  countryCode     String   @unique @db.Char(2) // CI, SN, CM, BF…
+  nameFr          String
+  nameEn          String
+  defaultCurrency String   @db.Char(3)
+  currencies      String[] @default([]) // ex. ["XOF"]
+  providers       String[] @default([]) // slugs PaymentProvider
+  timezone        String   @default("Africa/Abidjan")
+  taxLabel        String?  // ex. "TVA", "GST"
+  taxBps          Int      @default(0)  // basis points (1800 = 18%)
+  active          Boolean  @default(true)
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 // ——— Push subscriptions (Phase 6.1) ———
 
 model PushSubscription {

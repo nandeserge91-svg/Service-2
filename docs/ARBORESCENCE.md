@@ -109,6 +109,10 @@ Service 2/
 │   │       │   ├── moderation/page.tsx     ← Signalements + SLA support (7.2)
 │   │       │   ├── metriques/page.tsx      ← KPIs plateforme (7.3)
 │   │       │   ├── feature-flags/page.tsx  ← Feature flags DB CRUD (7.4)
+│   │       │   ├── devises/page.tsx       ← Devises & taux de change (8.1)
+│   │       │   ├── fournisseurs-paiement/page.tsx ← Fournisseurs paiement CRUD (8.2)
+│   │       │   ├── pays/page.tsx          ← Configuration pays multi-pays (8.3)
+│   │       │   ├── exports/page.tsx       ← Exports CSV transactions/commissions (8.4)
 │   │       │   └── litiges/
 │   │       │       ├── page.tsx               ← Liste litiges + KPIs
 │   │       │       └── [id]/page.tsx          ← Détail + thread + résolution
@@ -256,6 +260,11 @@ Service 2/
 │   │   ├── report-actions.ts        ← Signalements submit + admin review (7.2)
 │   │   ├── metrics.ts               ← Métriques plateforme (7.3)
 │   │   ├── flag-actions.ts          ← Feature flags DB + env fallback (7.4)
+│   │   ├── currency-actions.ts      ← Devises, taux de change, conversion (8.1)
+│   │   ├── payment-provider-actions.ts ← Fournisseurs paiement CRUD (8.2)
+│   │   ├── payment-routing.ts       ← Routage paiement multi-provider (8.2)
+│   │   ├── country-actions.ts       ← Configuration pays CRUD (8.3)
+│   │   ├── export-actions.ts        ← Export CSV transactions/commissions (8.4)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -341,3 +350,7 @@ Service 2/
 - Phase 7.2 : Modération — `Report` (signalements), page admin `/moderation`, SLA support affiché.
 - Phase 7.3 : Observabilité — `metrics.ts`, page admin `/metriques` (KPIs, taux, GMV, temps résolution).
 - Phase 7.4 : Feature flags DB — `FeatureFlag`, `isFeatureEnabled()`, page admin `/feature-flags` CRUD + toggle.
+- Phase 8.1 : Multi-devises — `ExchangeRate`, `SupportedCurrency`, `convertAmount()`, admin `/devises`.
+- Phase 8.2 : Paiement local #2 — `PaymentProvider`, `payment-routing.ts` (routage auto), Orange Money stub + webhook.
+- Phase 8.3 : Multi-pays — `CountryConfig`, admin `/pays`, devise par défaut, fournisseurs, taxe par pays.
+- Phase 8.4 : Export comptable — CSV transactions/commissions, admin `/exports`, filtres période.

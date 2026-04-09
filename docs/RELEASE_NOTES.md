@@ -111,6 +111,32 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 - Avis manquants (commande terminée 3-7 jours, pas d'avis) : notification in_app + push.
 - Route cron `GET /api/cron/reminders` sécurisée par `CRON_SECRET`.
 
+## Phase 8.1 — Multi-devises
+
+- Modèle `ExchangeRate` : taux base/cible avec période de validité, source (MANUAL ou API), création automatique du taux inverse.
+- Modèle `SupportedCurrency` : code, symbole, noms FR/EN, décimales, toggle actif/inactif.
+- `convertAmount()` : conversion inter-devises en temps réel basée sur les taux en vigueur.
+- Page admin `/tableau-de-bord/admin/devises` : CRUD devises + enregistrement taux de change.
+
+## Phase 8.2 — Paiement local #2
+
+- Modèle `PaymentProvider` : slug, noms FR/EN, devises, pays supportés, configuration JSON.
+- `payment-routing.ts` : routage automatique vers le bon fournisseur selon le pays et la devise du client.
+- Orange Money intégré (stub en dev, API WebPay en prod), webhook `/api/webhooks/orange-money`.
+- Page admin `/tableau-de-bord/admin/fournisseurs-paiement` : ajout, toggle actif/inactif, suppression.
+
+## Phase 8.3 — Multi-pays
+
+- Modèle `CountryConfig` : code pays, noms FR/EN, devise par défaut, fournisseurs de paiement, fuseau horaire, taxe (label + taux bps).
+- Page admin `/tableau-de-bord/admin/pays` : CRUD complet avec toggle actif/inactif.
+- `country-actions.ts` : fonctions serveur pour la gestion des pays.
+
+## Phase 8.4 — Export comptable
+
+- `exportTransactionsCSV()` : export CSV de toutes les commandes (montants, statuts, paiements) avec filtres par période (max 10 000 lignes).
+- `exportCommissionsCSV()` : export des commandes complétées avec commissions et taux effectif.
+- Page admin `/tableau-de-bord/admin/exports` : sélection de période, téléchargement client-side avec BOM UTF-8 pour compatibilité Excel.
+
 ## Phase 7.1 — Anti-fraude basique
 
 - Modèle `TrustScore` : score confiance 0-100, taux complétion, taux litiges, nombre signalements, calculé automatiquement.

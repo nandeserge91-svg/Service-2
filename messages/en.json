@@ -220,6 +220,10 @@
       "moderation": "Moderation",
       "metrics": "Metrics",
       "featureFlags": "Feature flags",
+      "currencies": "Currencies",
+      "paymentProviders": "Payment providers",
+      "countries": "Countries",
+      "exports": "Exports",
       "audit": "Audit Log"
     }
   }

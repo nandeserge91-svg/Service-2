@@ -8,7 +8,7 @@ import {
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
   Star, Wallet, ArrowDownToLine, LayoutDashboard, Users, FolderTree,
   Settings, FileText, Shield, History, BadgeCheck, Tag, Crown, Gift, PenSquare,
-  Flag, Activity, ToggleLeft,
+  Flag, Activity, ToggleLeft, DollarSign, Globe, Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -61,6 +61,10 @@ const adminNav: NavItem[] = [
   { labelKey: "moderation", href: "/tableau-de-bord/admin/moderation", icon: Flag },
   { labelKey: "metrics", href: "/tableau-de-bord/admin/metriques", icon: Activity },
   { labelKey: "featureFlags", href: "/tableau-de-bord/admin/feature-flags", icon: ToggleLeft },
+  { labelKey: "currencies", href: "/tableau-de-bord/admin/devises", icon: DollarSign },
+  { labelKey: "paymentProviders", href: "/tableau-de-bord/admin/fournisseurs-paiement", icon: CreditCard },
+  { labelKey: "countries", href: "/tableau-de-bord/admin/pays", icon: Globe },
+  { labelKey: "exports", href: "/tableau-de-bord/admin/exports", icon: Download },
   { labelKey: "audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
 ];
 

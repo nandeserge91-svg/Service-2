@@ -220,6 +220,10 @@
       "moderation": "Modération",
       "metrics": "Métriques",
       "featureFlags": "Feature flags",
+      "currencies": "Devises",
+      "paymentProviders": "Fournisseurs paiement",
+      "countries": "Pays",
+      "exports": "Exports",
       "audit": "Journal d'audit"
     }
   }
