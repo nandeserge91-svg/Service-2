@@ -76,6 +76,9 @@ Service 2/
 │   │   │   └── [slug]/
 │   │   │       ├── page.tsx                   ← Service detail + generateMetadata + JSON-LD
 │   │   │       └── loading.tsx                ← Skeleton service
+│   │   ├── api/
+│   │   │   ├── push/subscribe/route.ts        ← Push subscription CRUD (6.1)
+│   │   │   └── ...
 │   │   ├── blog/
 │   │   │   ├── page.tsx                       ← Liste articles publiés (5.6)
 │   │   │   └── [slug]/page.tsx                ← Article détail + SEO (5.6)
@@ -147,6 +150,7 @@ Service 2/
 │   │   │   ├── header.tsx                     ← Nav + next-intl + LanguageSwitcher
 │   │   │   ├── footer.tsx                     ← Footer dark + getTranslations (catégories DB = nameFr)
 │   │   │   ├── language-switcher.tsx         ← Cookie NEXT_LOCALE fr/en + refresh
+│   │   ├── service-worker-register.tsx  ← Auto-register /sw.js (6.1)
 │   │   │   ├── breadcrumbs.tsx                ← Fil d'Ariane réutilisable (9 pages)
 │   │   │   ├── mobile-nav.tsx
 │   │   │   ├── static-page-layout.tsx         ← Layout pages statiques (+ breadcrumbs optionnel)
@@ -164,7 +168,8 @@ Service 2/
 │   │   │   ├── order-actions.tsx              ← Actions contextuelles buyer/seller
 │   │   │   └── order-timeline.tsx             ← Chronologie événements commande
 │   │   ├── notifications/
-│   │   │   └── notification-bell.tsx          ← Cloche + dropdown SSE temps réel
+│   │   │   ├── notification-bell.tsx          ← Cloche + dropdown SSE temps réel
+│   │   │   └── push-manager.tsx              ← Toggle push subscription VAPID (6.1)
 │   │   ├── reviews/
 │   │   │   ├── star-rating.tsx                ← Étoiles interactives/lecture
 │   │   │   ├── review-card.tsx                ← Carte d'avis complète
@@ -238,6 +243,7 @@ Service 2/
 │   │   ├── subscription-actions.ts  ← Plans vendeur + souscription/annulation (5.6)
 │   │   ├── referral-actions.ts      ← Parrainage : code, application, crédit bonus (5.6)
 │   │   ├── blog-actions.ts          ← CRUD blog posts admin (5.6)
+│   │   ├── push.ts                  ← web-push VAPID + sendPushToUser (6.1)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -314,3 +320,4 @@ Service 2/
 - Phase 5.4 : Système de coupons — modèle Prisma `Coupon`, `couponId`/`discountMinor` sur `Order`, validation au checkout, CRUD admin (`/admin/coupons`).
 - Phase 5.5 : PWA — `public/manifest.json`, meta `manifest` + `appleWebApp` dans layout, placeholder icônes.
 - Phase 5.6 : V3 pilotes — `SellerSubscription` (FREE/PRO/PREMIUM), `Referral` (parrainage code + crédit), `BlogPost` (CMS admin + pages publiques /blog).
+- Phase 6.1 : Push notifications — `PushSubscription`, `public/sw.js`, `web-push` VAPID, `PushManager` toggle dans header, envoi push intégré à `notifications.ts`.

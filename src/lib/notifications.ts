@@ -1,6 +1,7 @@
 import { prisma } from "./prisma";
 import { deferAfterResponse } from "./deferred";
 import { enqueueEmailOutbox, processEmailOutboxBatch } from "./outbox-email";
+import { sendPushToUser } from "./push";
 import { formatPrice } from "./utils";
 
 type Channel = "in_app" | "email" | "both";
@@ -14,7 +15,7 @@ interface NotifyOpts {
 }
 
 /**
- * Create an in-app notification and optionally dispatch an email.
+ * Create an in-app notification, send a push notification, and optionally dispatch an email.
  * All calls are fire-and-forget — errors are logged, never thrown.
  */
 async function notify({ userId, title, body, channel = "both", data }: NotifyOpts) {
@@ -32,6 +33,17 @@ async function notify({ userId, title, body, channel = "both", data }: NotifyOpt
     }
   } catch (err) {
     console.error("[notify:in_app]", err);
+  }
+
+  try {
+    sendPushToUser(userId, {
+      title,
+      body,
+      url: data?.link,
+      tag: data?.orderId ?? data?.conversationId ?? undefined,
+    }).catch((err) => console.error("[notify:push]", err));
+  } catch {
+    /* push unavailable */
   }
 }
 

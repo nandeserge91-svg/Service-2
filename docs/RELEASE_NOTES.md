@@ -75,6 +75,17 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 - Page admin `/tableau-de-bord/admin/blog` : création, publication/dépublication, suppression.
 - Pages publiques `/blog` (listing) et `/blog/[slug]` (détail) avec SEO `generateMetadata`.
 
+## Phase 6.1 — Push notifications (PWA)
+
+- Modèle Prisma `PushSubscription` : endpoint, clés VAPID p256dh/auth, lié à l'utilisateur.
+- Service worker `public/sw.js` : réception push, affichage notification native, clic → navigation.
+- API route `POST/DELETE /api/push/subscribe` : souscription et désinscription push côté serveur.
+- Composant `PushManager` dans le header : toggle push actif/inactif (visible uniquement si supporté).
+- Module `src/lib/push.ts` : envoi push via `web-push` VAPID, nettoyage des souscriptions expirées (410/404).
+- Intégration dans `notifications.ts` : chaque `notify()` envoie aussi un push natif en plus de in_app + email.
+- `ServiceWorkerRegister` : enregistrement automatique du SW au chargement du layout.
+- Variables d'environnement : `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_MAILTO`.
+
 ## v0.1.0 — Gel première mise en production
 
 **Date cible :** à renseigner au go-live.

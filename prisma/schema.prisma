@@ -137,10 +137,11 @@ model User {
   offersAsBuyer    Offer[]          @relation("OfferBuyer")
   notifications    Notification[]
   auditLogs        AuditLog[]       @relation("AuditActor")
-  referralCode     String?          @unique
-  referredBy       Referral?        @relation("ReferredUser")
-  referrals        Referral[]       @relation("ReferrerUser")
-  blogPosts        BlogPost[]
+  referralCode        String?          @unique
+  referredBy          Referral?        @relation("ReferredUser")
+  referrals           Referral[]       @relation("ReferrerUser")
+  blogPosts           BlogPost[]
+  pushSubscriptions   PushSubscription[]
 }
 
 model UserRoleAssignment {
@@ -750,6 +751,21 @@ model Coupon {
   orders Order[]
 
   @@index([code, active])
+}
+
+// ——— Push subscriptions (Phase 6.1) ———
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  authKey   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 // ——— File e-mails durable (Phase 4.64) ———

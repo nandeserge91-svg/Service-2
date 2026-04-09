@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MaintenanceBanner } from "@/components/layout/maintenance-banner";
 import { Providers } from "@/components/providers";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { APP_NAME } from "@/lib/constants";
 import "./globals.css";
 
@@ -86,6 +87,7 @@ export default async function RootLayout({
               {children}
             </main>
             <Footer />
+            <ServiceWorkerRegister />
           </Providers>
         </NextIntlClientProvider>
       </body>

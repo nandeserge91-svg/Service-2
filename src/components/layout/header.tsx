@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { NotificationBell } from "@/components/notifications/notification-bell";
+import { PushManager } from "@/components/notifications/push-manager";
 import { SearchBar } from "@/components/search/search-bar";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { cn } from "@/lib/utils";
@@ -160,6 +161,7 @@ export function Header() {
 
           {isLoggedIn ? (
             <>
+              <PushManager />
               <NotificationBell />
               {/* User dropdown */}
               <div className="relative">
