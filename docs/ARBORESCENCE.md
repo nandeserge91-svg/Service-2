@@ -88,6 +88,7 @@ Service 2/
 │   │       ├── admin/
 │   │       │   ├── layout.tsx                 ← ADMIN/SUPPORT gate + sidebar
 │   │       │   ├── page.tsx                   ← Dashboard KPIs plateforme
+│   │       │   ├── analytiques/page.tsx       ← Séries 7/30/90j (commandes, users, GMV, commissions)
 │   │       │   ├── utilisateurs/page.tsx      ← Gestion utilisateurs
 │   │       │   ├── services/page.tsx          ← Modération services
 │   │       │   ├── retraits/page.tsx          ← Approbation retraits
@@ -102,6 +103,10 @@ Service 2/
 │   │       │   ├── commandes/
 │   │       │   │   ├── page.tsx               ← Liste commandes client
 │   │       │   │   └── [id]/page.tsx          ← Détail commande client
+│   │       │   ├── historique/page.tsx        ← Historique d'achat + graphique mensuel (Phase 4.49)
+│   │       │   ├── favoris/page.tsx           ← Services favoris (Phase 4.50)
+│   │       │   ├── paiements/page.tsx         ← Historique paiements (Phase 4.50)
+│   │       │   ├── litiges/page.tsx           ← Mes litiges (Phase 4.50)
 │   │       │   ├── messages/
 │   │       │   │   ├── layout.tsx             ← Split-panel messages
 │   │       │   │   ├── page.tsx               ← Liste conversations
@@ -122,6 +127,8 @@ Service 2/
 │   │           │   ├── page.tsx
 │   │           │   └── [id]/page.tsx
 │   │           ├── revenus/page.tsx           ← Dashboard revenus + KPIs
+│   │           ├── performances/page.tsx      ← Analytics vendeur CA / commandes / top services (4.49)
+│   │           ├── avis/page.tsx              ← Avis reçus + note globale (Phase 4.50)
 │   │           ├── retraits/page.tsx          ← Demande retrait + historique
 │   │           └── notifications/page.tsx     ← Re-export client notifications
 │   ├── components/
@@ -133,7 +140,9 @@ Service 2/
 │   │   │   ├── breadcrumbs.tsx                ← Fil d'Ariane réutilisable (9 pages)
 │   │   │   ├── mobile-nav.tsx
 │   │   │   ├── static-page-layout.tsx         ← Layout pages statiques (+ breadcrumbs optionnel)
-│   │   │   └── dashboard-sidebar.tsx          ← Role-based nav
+│   │   │   └── dashboard-sidebar.tsx          ← Role-based nav (+ Historique client, Analytiques admin)
+│   │   ├── analytics/
+│   │   │   └── analytics-bar-chart.tsx        ← Barres CSS (séries Phase 4.49)
 │   │   ├── messaging/
 │   │   │   ├── conversation-list.tsx          ← Liste conversations (polling 10s)
 │   │   │   ├── chat-thread.tsx                ← Fil de discussion + offres
@@ -212,6 +221,7 @@ Service 2/
 │   │   ├── jsonld.ts              ← Générateurs JSON-LD (Organization, Service, Breadcrumb)
 │   │   ├── outbox-email.ts          ← File PostgreSQL e-mails (enqueue + batch + dispatch)
 │   │   ├── locale-actions.ts        ← setUserLocale (cookie NEXT_LOCALE)
+│   │   ├── analytics.ts             ← Agrégations historique / analytics (vendeur, admin SQL, client)
 │   │   ├── contact-actions.ts       ← Formulaire contact → outbox + rate limit IP
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
@@ -228,6 +238,7 @@ Service 2/
 │   │   ├── jsonld.test.ts            ← Tests Schema.org JSON-LD
 │   │   ├── ledger.test.ts            ← Tests double-entry balance
 │   │   ├── escrow.test.ts            ← Tests state machine escrow
+│   │   ├── analytics.test.ts         ← Tests fenêtre temporelle + séries (4.49)
 │   │   ├── outbox-email.test.ts      ← Tests batch outbox (mock Prisma + sendMail)
 │   │   ├── contact-actions.test.ts   ← Tests validation + XSS + enqueue outbox + rate limit
 │   │   ├── rate-limit-memory.test.ts ← Tests limiteur en mémoire
@@ -277,4 +288,6 @@ Service 2/
 - Phase 4.62 : `@sentry/nextjs`, instrumentation, `global-error`, tunnel `/monitoring`, doc déploiement §6, backlog queue/i18n/Phase 5.
 - Phase 4.63 : `deferAfterResponse` + e-mails notifications/contact via `after()`, tests `deferred.test.ts`.
 - Phase 4.64 : table `EmailOutbox` + `outbox-email.ts` + route `GET /api/cron/outbox` ; `next-intl` + `messages/*` + cookie `NEXT_LOCALE` (header/footer/layout).
+- Phase 4.49 : `analytics.ts` + pages vendeur `/performances`, admin `/analytiques`, client `/historique` ; bar chart léger.
+- Phase 4.50 : Onboarding checklist dynamique (vendeur + client), dashboards branchés DB, pages favoris, paiements, litiges client, avis vendeur.
 - Phase 5 : cadrage `phase-5-croissance-et-evolution.md` (V2/V3, jalons 5.1–5.6 indicatifs) — implémentation à planifier par tickets.

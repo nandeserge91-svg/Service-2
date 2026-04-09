@@ -10,6 +10,18 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 
 - Envoi des e-mails déclenchés par `notifications.ts` et le formulaire contact **après** la réponse HTTP (`next/server` `after`), avec repli si hors contexte requête.
 
+## Technique — Phase 4.50 (onboarding + pages manquantes + dashboards DB)
+
+- Onboarding checklist dynamique vendeur (profil + premier service publié) et client (profil + commande + favori).
+- Dashboards vendeur et client branchés sur Prisma (revenus mois, commandes actives, note moyenne, taux à temps, messages non lus, actions requises).
+- 4 pages ajoutées : favoris client, paiements client, litiges client, avis vendeur — plus aucun lien sidebar en 404.
+
+## Technique — Phase 4.49 (historique / analytics)
+
+- Vendeur : page **Performances** (CA et commandes par jour, top services, KPIs) sur 7 / 30 / 90 jours.
+- Admin : page **Analytiques** (commandes créées, inscriptions, GMV terminé, commissions par jour).
+- Client : page **Historique** (dépenses par mois, dernières commandes terminées).
+
 ## Technique — Phase 4.64 (outbox PostgreSQL + i18n public)
 
 - Table `EmailOutbox` : enqueue depuis notifications et contact ; envoi par batch après réponse + route cron sécurisée `GET /api/cron/outbox` (`CRON_SECRET`).

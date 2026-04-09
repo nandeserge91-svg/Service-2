@@ -15,8 +15,8 @@
 | 4.46 | Notifications | ✅ Terminé |
 | 4.47 | Avis / réputation | ✅ Terminé |
 | 4.48 | Litiges / modération | ✅ Terminé |
-| 4.49 | Historique / analytics | 🔲 À faire |
-| 4.50 | Tutoriels / onboarding | 🔲 À faire |
+| 4.49 | Historique / analytics | ✅ Terminé |
+| 4.50 | Tutoriels / onboarding | ✅ Terminé |
 | 4.51 | Admin dashboard | ✅ Terminé |
 | 4.64 | File e-mails PostgreSQL + i18n publique (cookie `NEXT_LOCALE`) | ✅ Terminé |
 
@@ -888,7 +888,32 @@ Layout admin protégé : seuls les rôles `ADMIN` et `SUPPORT` ont accès.
 
 ---
 
-## Phase 4.49 — Admin Dashboard Complet
+## Phase 4.49 — Historique et analytics
+
+### Résumé
+
+Tableaux de bord **vendeur**, **client** et **admin** avec séries temporelles (7 / 30 / 90 jours), agrégations Prisma et graphiques en barres légers (sans librairie chart externe).
+
+### Fichiers
+
+| Fichier | Rôle |
+|---------|------|
+| `src/lib/analytics.ts` | Fenêtre glissante UTC, `getSellerPerformance`, `getAdminPlatformAnalytics` (SQL brut PostgreSQL), `getBuyerSpendHistory` |
+| `src/lib/analytics.test.ts` | Tests unitaires (fenêtre, séries, clamp `days`) |
+| `src/components/analytics/analytics-bar-chart.tsx` | Barres CSS pour séries quotidiennes / mensuelles |
+| `src/app/tableau-de-bord/vendeur/performances/page.tsx` | CA par jour, commandes / jour, top services, KPIs |
+| `src/app/tableau-de-bord/admin/analytiques/page.tsx` | Commandes créées, inscriptions, GMV terminé, commissions / jour |
+| `src/app/tableau-de-bord/client/historique/page.tsx` | Dépenses par mois, liste des commandes terminées récentes |
+| `src/components/layout/dashboard-sidebar.tsx` | Liens **Historique** (client) et **Analytiques** (admin) |
+
+### Notes
+
+- Les dates suivent une convention **UTC minuit** pour les buckets afin d’éviter les dérives fuseau sur les agrégations.
+- La route **Performances** vendeur était déjà dans la sidebar ; la page manquante est implémentée ici.
+
+---
+
+## Phase 4.51 — Admin dashboard complet
 
 ### Résumé
 
@@ -1766,7 +1791,36 @@ Première brique **hors bande passante** pour les e-mails transactionnels : exé
 
 ---
 
+## Phase 4.50 — Onboarding, pages manquantes et dashboards branchés
+
+### Résumé
+
+Suppression de tous les KPIs statiques, onboarding dynamique, et création des 4 pages manquantes (favoris, paiements, litiges client, avis vendeur).
+
+### Onboarding
+
+- **Vendeur** : checklist *Compte créé / Compléter le profil / Publier un service*, masquée si tout est fait. Chaque badge non terminé pointe vers l'action correspondante.
+- **Client** : checklist *Compte créé / Compléter le profil / Passer une commande / Ajouter un favori*, même logique.
+
+### Dashboards branchés à la DB
+
+- **Vendeur** (`/tableau-de-bord/vendeur`) : revenus du mois, commandes actives, note moyenne, taux à temps (100 dernières commandes terminées), liste des 5 services récents avec statut et nombre de commandes.
+- **Client** (`/tableau-de-bord/client`) : commandes actives, conversations non lues, actions requises, 5 dernières commandes avec statut/prix.
+
+### Pages ajoutées (4 liens sidebar manquants)
+
+| Page | Route | Contenu |
+|------|-------|---------|
+| Favoris client | `/tableau-de-bord/client/favoris` | Liste favoris DB, prix, note, lien vers la fiche service |
+| Paiements client | `/tableau-de-bord/client/paiements` | Historique `Payment` (statut, montant, date, service) |
+| Litiges client | `/tableau-de-bord/client/litiges` | Liste litiges avec statut, raison abrégée, lien vers commande |
+| Avis vendeur | `/tableau-de-bord/vendeur/avis` | Avis reçus, note globale, étoiles, réponse vendeur affichée |
+
+---
+
 ## Prochaine étape recommandée
+
+La **Phase 4 est entièrement terminée** (tous les jalons cochés dans le tableau).
 
 1. **Phase 5** : cadrage produit / roadmap post-MVP — voir [`phase-5-croissance-et-evolution.md`](./phase-5-croissance-et-evolution.md) (piliers V2/V3, jalons 5.1–5.6 indicatifs).
 2. **Extension i18n** : étendre les traductions aux pages marketing / formulaires publics, métadonnées `alternates` par locale, éventuellement `nameEn` côté catégories.

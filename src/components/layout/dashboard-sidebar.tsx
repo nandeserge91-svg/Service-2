@@ -6,7 +6,7 @@ import {
   Home, ShoppingBag, MessageCircle, Heart, CreditCard,
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
   Star, Wallet, ArrowDownToLine, LayoutDashboard, Users, FolderTree,
-  Settings, FileText, Shield,
+  Settings, FileText, Shield, History,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +19,7 @@ interface NavItem {
 const clientNav: NavItem[] = [
   { label: "Accueil", href: "/tableau-de-bord/client", icon: Home },
   { label: "Commandes", href: "/tableau-de-bord/client/commandes", icon: ShoppingBag },
+  { label: "Historique", href: "/tableau-de-bord/client/historique", icon: History },
   { label: "Messages", href: "/tableau-de-bord/client/messages", icon: MessageCircle },
   { label: "Favoris", href: "/tableau-de-bord/client/favoris", icon: Heart },
   { label: "Paiements", href: "/tableau-de-bord/client/paiements", icon: CreditCard },
@@ -44,6 +45,7 @@ const sellerNav: NavItem[] = [
 
 const adminNav: NavItem[] = [
   { label: "Aperçu", href: "/tableau-de-bord/admin", icon: LayoutDashboard },
+  { label: "Analytiques", href: "/tableau-de-bord/admin/analytiques", icon: BarChart3 },
   { label: "Utilisateurs", href: "/tableau-de-bord/admin/utilisateurs", icon: Users },
   { label: "Services", href: "/tableau-de-bord/admin/services", icon: Store },
   { label: "Litiges", href: "/tableau-de-bord/admin/litiges", icon: AlertTriangle },
