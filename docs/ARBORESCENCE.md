@@ -106,6 +106,9 @@ Service 2/
 │   │       │   ├── kyc/page.tsx              ← Vérification KYC vendeurs (5.3)
 │   │       │   ├── coupons/page.tsx          ← Gestion coupons CRUD (5.4)
 │   │       │   ├── blog/page.tsx            ← CMS blog : CRUD articles (5.6)
+│   │       │   ├── moderation/page.tsx     ← Signalements + SLA support (7.2)
+│   │       │   ├── metriques/page.tsx      ← KPIs plateforme (7.3)
+│   │       │   ├── feature-flags/page.tsx  ← Feature flags DB CRUD (7.4)
 │   │       │   └── litiges/
 │   │       │       ├── page.tsx               ← Liste litiges + KPIs
 │   │       │       └── [id]/page.tsx          ← Détail + thread + résolution
@@ -249,6 +252,10 @@ Service 2/
 │   │   ├── push.ts                  ← web-push VAPID + sendPushToUser (6.1)
 │   │   ├── recommendation-actions.ts ← Similar, compare, popular, recent services (6.3)
 │   │   ├── reminders.ts             ← Relances automatiques : abandon, messages, avis (6.5)
+│   │   ├── trust-actions.ts         ← TrustScore compute + SpendingLimit check (7.1)
+│   │   ├── report-actions.ts        ← Signalements submit + admin review (7.2)
+│   │   ├── metrics.ts               ← Métriques plateforme (7.3)
+│   │   ├── flag-actions.ts          ← Feature flags DB + env fallback (7.4)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -330,3 +337,7 @@ Service 2/
 - Phase 6.3 : Recommandations — `SimilarServices` sur fiche, `/comparer` côte-à-côte, `recommendation-actions.ts`.
 - Phase 6.4 : i18n étendue — hreflang alternates, `getUserLocale()` e-mails, sidebar dashboard FR/EN.
 - Phase 6.5 : Relances automatiques — `/api/cron/reminders`, commandes abandonnées, messages non lus, avis manquants.
+- Phase 7.1 : Anti-fraude — `TrustScore` (score 0-100), `SpendingLimit` (quotidien/mensuel), `computeTrustScore()`, `checkSpendingLimit()`.
+- Phase 7.2 : Modération — `Report` (signalements), page admin `/moderation`, SLA support affiché.
+- Phase 7.3 : Observabilité — `metrics.ts`, page admin `/metriques` (KPIs, taux, GMV, temps résolution).
+- Phase 7.4 : Feature flags DB — `FeatureFlag`, `isFeatureEnabled()`, page admin `/feature-flags` CRUD + toggle.

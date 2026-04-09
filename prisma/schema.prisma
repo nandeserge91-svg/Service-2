@@ -142,6 +142,8 @@ model User {
   referrals           Referral[]       @relation("ReferrerUser")
   blogPosts           BlogPost[]
   pushSubscriptions   PushSubscription[]
+  trustScore          TrustScore?
+  reports             Report[]         @relation("ReportReporter")
 }
 
 model UserRoleAssignment {
@@ -751,6 +753,76 @@ model Coupon {
   orders Order[]
 
   @@index([code, active])
+}
+
+// ——— Anti-fraude & confiance (Phase 7.1) ———
+
+model TrustScore {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  score               Int      @default(100) // 0–100
+  orderCompletionRate Int      @default(0)   // % commandes complétées
+  disputeRate         Int      @default(0)   // % litiges / commandes
+  avgResponseHours    Int      @default(0)
+  flagCount           Int      @default(0)   // signalements reçus
+  lastComputedAt      DateTime @default(now())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SpendingLimit {
+  id            String  @id @default(cuid())
+  scope         String  @default("GLOBAL") // GLOBAL or USER
+  userId        String?
+  dailyMinor    BigInt  @default(5000000)   // 50 000 XOF default
+  monthlyMinor  BigInt  @default(50000000)  // 500 000 XOF default
+  currency      String  @default("XOF") @db.Char(3)
+  active        Boolean @default(true)
+
+  @@unique([scope, userId])
+  @@index([userId])
+}
+
+// ——— Signalements / Modération (Phase 7.2) ———
+
+enum ReportStatus {
+  OPEN
+  REVIEWING
+  RESOLVED
+  DISMISSED
+}
+
+model Report {
+  id             String       @id @default(cuid())
+  reporterUserId String
+  targetType     String       // USER, SERVICE, REVIEW, MESSAGE
+  targetId       String
+  reason         String
+  details        String?      @db.Text
+  status         ReportStatus @default(OPEN)
+  adminNote      String?      @db.Text
+  resolvedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  reporter User @relation("ReportReporter", fields: [reporterUserId], references: [id])
+
+  @@index([status])
+  @@index([targetType, targetId])
+  @@index([reporterUserId])
+}
+
+// ——— Feature flags DB (Phase 7.4) ———
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  enabled     Boolean  @default(false)
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // ——— Push subscriptions (Phase 6.1) ———

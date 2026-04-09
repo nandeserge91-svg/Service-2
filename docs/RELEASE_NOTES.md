@@ -111,6 +111,30 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 - Avis manquants (commande terminée 3-7 jours, pas d'avis) : notification in_app + push.
 - Route cron `GET /api/cron/reminders` sécurisée par `CRON_SECRET`.
 
+## Phase 7.1 — Anti-fraude basique
+
+- Modèle `TrustScore` : score confiance 0-100, taux complétion, taux litiges, nombre signalements, calculé automatiquement.
+- Modèle `SpendingLimit` : limites de dépense quotidienne/mensuelle par utilisateur ou globales.
+- `computeTrustScore()` : algorithme basé sur complétion commandes, litiges, signalements.
+- `checkSpendingLimit()` : vérification avant chaque commande (intégrable dans `createOrderFromPackage`).
+
+## Phase 7.2 — Modération enrichie
+
+- Modèle `Report` : signalements (USER, SERVICE, REVIEW, MESSAGE) avec statuts OPEN → REVIEWING → RESOLVED/DISMISSED.
+- Page admin `/tableau-de-bord/admin/moderation` : KPIs (ouverts, en examen, résolus), SLA affiché (48h standard, 24h critique), actions résoudre/rejeter.
+- `submitReport()` : server action pour signalement utilisateur, `reviewReport()` : traitement admin.
+
+## Phase 7.3 — Observabilité
+
+- Module `metrics.ts` : KPIs plateforme (utilisateurs, commandes, GMV, commissions, taux paiement, taux complétion/annulation/litiges, temps résolution litiges).
+- Page admin `/tableau-de-bord/admin/metriques` : tableau de bord visuel avec barres de progression et indicateurs.
+
+## Phase 7.4 — Feature flags DB
+
+- Modèle `FeatureFlag` : clé unique, enabled, description, timestamps.
+- `isFeatureEnabled(key)` : vérifie d'abord en DB, fallback sur env `FEATURE_*` (rétrocompatible Phase 4.61).
+- Page admin `/tableau-de-bord/admin/feature-flags` : création, toggle on/off, suppression.
+
 ## v0.1.0 — Gel première mise en production
 
 **Date cible :** à renseigner au go-live.

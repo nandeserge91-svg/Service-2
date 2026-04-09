@@ -8,6 +8,7 @@ import {
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
   Star, Wallet, ArrowDownToLine, LayoutDashboard, Users, FolderTree,
   Settings, FileText, Shield, History, BadgeCheck, Tag, Crown, Gift, PenSquare,
+  Flag, Activity, ToggleLeft,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -57,6 +58,9 @@ const adminNav: NavItem[] = [
   { labelKey: "kyc", href: "/tableau-de-bord/admin/kyc", icon: BadgeCheck },
   { labelKey: "coupons", href: "/tableau-de-bord/admin/coupons", icon: Tag },
   { labelKey: "blog", href: "/tableau-de-bord/admin/blog", icon: PenSquare },
+  { labelKey: "moderation", href: "/tableau-de-bord/admin/moderation", icon: Flag },
+  { labelKey: "metrics", href: "/tableau-de-bord/admin/metriques", icon: Activity },
+  { labelKey: "featureFlags", href: "/tableau-de-bord/admin/feature-flags", icon: ToggleLeft },
   { labelKey: "audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
 ];
 

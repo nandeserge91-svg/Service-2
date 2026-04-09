@@ -217,6 +217,9 @@
       "kyc": "KYC Verification",
       "coupons": "Coupons",
       "blog": "Blog",
+      "moderation": "Moderation",
+      "metrics": "Metrics",
+      "featureFlags": "Feature flags",
       "audit": "Audit Log"
     }
   }
