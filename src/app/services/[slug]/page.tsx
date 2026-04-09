@@ -17,6 +17,7 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { StarRating } from "@/components/reviews/star-rating";
 import { ReviewCard } from "@/components/reviews/review-card";
 import { ReputationSummary } from "@/components/reviews/reputation-summary";
+import { SimilarServices } from "@/components/services/similar-services";
 import { formatPrice } from "@/lib/utils";
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
@@ -324,6 +325,8 @@ export default async function ServiceDetailPage({
           )}
         </div>
       </div>
+
+      <SimilarServices serviceId={service.id} categoryId={service.categoryId} />
     </div>
   );
 }
