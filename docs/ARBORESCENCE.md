@@ -76,6 +76,9 @@ Service 2/
 │   │   │   └── [slug]/
 │   │   │       ├── page.tsx                   ← Service detail + generateMetadata + JSON-LD
 │   │   │       └── loading.tsx                ← Skeleton service
+│   │   ├── blog/
+│   │   │   ├── page.tsx                       ← Liste articles publiés (5.6)
+│   │   │   └── [slug]/page.tsx                ← Article détail + SEO (5.6)
 │   │   ├── recherche/
 │   │   │   ├── page.tsx                       ← Search + filters + generateMetadata
 │   │   │   └── loading.tsx                    ← Skeleton recherche
@@ -96,6 +99,7 @@ Service 2/
 │   │       │   ├── audit/page.tsx             ← Journal d'audit paginé
 │   │       │   ├── kyc/page.tsx              ← Vérification KYC vendeurs (5.3)
 │   │       │   ├── coupons/page.tsx          ← Gestion coupons CRUD (5.4)
+│   │       │   ├── blog/page.tsx            ← CMS blog : CRUD articles (5.6)
 │   │       │   └── litiges/
 │   │       │       ├── page.tsx               ← Liste litiges + KPIs
 │   │       │       └── [id]/page.tsx          ← Détail + thread + résolution
@@ -114,6 +118,7 @@ Service 2/
 │   │       │   │   ├── layout.tsx             ← Split-panel messages
 │   │       │   │   ├── page.tsx               ← Liste conversations
 │   │       │   │   └── [id]/page.tsx          ← Fil de conversation
+│   │       │   ├── parrainage/page.tsx        ← Parrainage : code, stats, historique (5.6)
 │   │       │   └── notifications/page.tsx     ← Centre de notifications
 │   │       └── vendeur/
 │   │           ├── layout.tsx                 ← Seller role guard
@@ -132,6 +137,7 @@ Service 2/
 │   │           ├── revenus/page.tsx           ← Dashboard revenus + KPIs
 │   │           ├── performances/page.tsx      ← Analytics vendeur CA / commandes / top services (4.49)
 │   │           ├── avis/page.tsx              ← Avis reçus + note globale (Phase 4.50)
+│   │           ├── abonnement/page.tsx        ← Plans vendeur FREE/PRO/PREMIUM (5.6)
 │   │           ├── kyc/page.tsx              ← Soumission vérification KYC vendeur (5.3)
 │   │           ├── retraits/page.tsx          ← Demande retrait + historique
 │   │           └── notifications/page.tsx     ← Re-export client notifications
@@ -229,6 +235,9 @@ Service 2/
 │   │   ├── contact-actions.ts       ← Formulaire contact → outbox + rate limit IP
 │   │   ├── coupon-actions.ts        ← Validation coupon + admin CRUD + usage (5.4)
 │   │   ├── kyc-actions.ts           ← Soumission KYC vendeur + review admin (5.3)
+│   │   ├── subscription-actions.ts  ← Plans vendeur + souscription/annulation (5.6)
+│   │   ├── referral-actions.ts      ← Parrainage : code, application, crédit bonus (5.6)
+│   │   ├── blog-actions.ts          ← CRUD blog posts admin (5.6)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -304,3 +313,4 @@ Service 2/
 - Phase 5.3 : KYC vendeur — soumission (`kyc-actions.ts`, `/vendeur/kyc`), revue admin (`/admin/kyc`), notification décision.
 - Phase 5.4 : Système de coupons — modèle Prisma `Coupon`, `couponId`/`discountMinor` sur `Order`, validation au checkout, CRUD admin (`/admin/coupons`).
 - Phase 5.5 : PWA — `public/manifest.json`, meta `manifest` + `appleWebApp` dans layout, placeholder icônes.
+- Phase 5.6 : V3 pilotes — `SellerSubscription` (FREE/PRO/PREMIUM), `Referral` (parrainage code + crédit), `BlogPost` (CMS admin + pages publiques /blog).

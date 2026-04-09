@@ -34,16 +34,16 @@ Tous les prérequis Phase 4 sont clôturés.
 ### 3.2 Monétisation & paiements
 
 - ✅ Coupons (V2) — **implémenté 5.4**.
-- Parrainage (V2) — à implémenter.
+- ✅ Parrainage (V2) — **implémenté 5.6**.
+- ✅ Abonnements / boost visibilité vendeur (V3) — **implémenté 5.6**.
 - **Multi-devises** et **moyens locaux** additionnels (V3) — impact schema, ledger, UX prix.
-- Abonnements / boost visibilité vendeur (V3).
 
 ### 3.3 Expérience utilisateur & acquisition
 
 - ✅ **PWA** / installabilité — **implémenté 5.5** (manifest, meta, layout).
+- ✅ Blog / CMS léger (V3) — **implémenté 5.6**.
 - Push notifications (si pertinent au marché cible).
 - Recommandations, comparaison de services, centre de notifications unifié (V2).
-- Blog / CMS léger (V3).
 
 ### 3.4 Internationalisation & marchés
 
@@ -68,7 +68,7 @@ Tous les prérequis Phase 4 sont clôturés.
 | **5.3** | Confiance V2 | ✅ Terminé | KYC vendeur (soumission + admin review + notification + badge), champs `kycDocumentUrl`/`kycNote` |
 | **5.4** | Monétisation V2 | ✅ Terminé | Modèle `Coupon`, `discountMinor`/`couponId` sur `Order`, validation checkout, admin CRUD |
 | **5.5** | Mobile / PWA | ✅ Terminé | `manifest.json`, metadata `manifest` + `appleWebApp`, icônes placeholder |
-| **5.6** | V3 pilotes | 🔜 À planifier | Abonnement vendeur, intégration paiement locale #2, CMS blog |
+| **5.6** | V3 pilotes | ✅ Terminé | Abonnements vendeur (FREE/PRO/PREMIUM), parrainage (code+bonus), blog CMS (admin+public) |
 
 ---
 
@@ -93,8 +93,8 @@ Tous les prérequis Phase 4 sont clôturés.
 
 - **Ce document** : cadrage et carte des chantiers (mis à jour avec statuts).
 - **`ARBORESCENCE.md`** : reflet des nouveaux modules (kyc, coupons, manifest, traductions).
-- **`RELEASE_NOTES.md`** : entrées 5.2, 5.3, 5.4, 5.5.
+- **`RELEASE_NOTES.md`** : entrées 5.2, 5.3, 5.4, 5.5, 5.6.
 
 ---
 
-**Prochaine action concrète :** le jalon **5.6** (V3 pilotes : abonnement vendeur, parrainage, intégration paiement locale #2, CMS blog) est le prochain chantier significatif. Alternativement, étendre l'i18n aux e-mails et pages dashboard, ou implémenter le parrainage.
+**La Phase 5 est entièrement terminée** (jalons 5.1 → 5.6). Les axes restants pour la suite sont : push notifications, multi-devises / intégration paiement locale #2, recommandations, comparaison de services, et extension i18n aux e-mails et pages dashboard.

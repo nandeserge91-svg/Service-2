@@ -6,7 +6,7 @@ import {
   Home, ShoppingBag, MessageCircle, Heart, CreditCard,
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
   Star, Wallet, ArrowDownToLine, LayoutDashboard, Users, FolderTree,
-  Settings, FileText, Shield, History, BadgeCheck, Tag,
+  Settings, FileText, Shield, History, BadgeCheck, Tag, Crown, Gift, PenSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,7 @@ const clientNav: NavItem[] = [
   { label: "Paiements", href: "/tableau-de-bord/client/paiements", icon: CreditCard },
   { label: "Litiges", href: "/tableau-de-bord/client/litiges", icon: AlertTriangle },
   { label: "Notifications", href: "/tableau-de-bord/client/notifications", icon: Bell },
+  { label: "Parrainage", href: "/tableau-de-bord/client/parrainage", icon: Gift },
   { label: "Profil", href: "/tableau-de-bord/client/profil", icon: User },
   { label: "Aide", href: "/aide/guide-client", icon: HelpCircle },
 ];
@@ -38,6 +39,7 @@ const sellerNav: NavItem[] = [
   { label: "Retraits", href: "/tableau-de-bord/vendeur/retraits", icon: ArrowDownToLine },
   { label: "Performances", href: "/tableau-de-bord/vendeur/performances", icon: BarChart3 },
   { label: "Avis", href: "/tableau-de-bord/vendeur/avis", icon: Star },
+  { label: "Abonnement", href: "/tableau-de-bord/vendeur/abonnement", icon: Crown },
   { label: "Vérification KYC", href: "/tableau-de-bord/vendeur/kyc", icon: BadgeCheck },
   { label: "Profil", href: "/tableau-de-bord/vendeur/profil", icon: User },
   { label: "Notifications", href: "/tableau-de-bord/vendeur/notifications", icon: Bell },
@@ -53,6 +55,7 @@ const adminNav: NavItem[] = [
   { label: "Retraits", href: "/tableau-de-bord/admin/retraits", icon: ArrowDownToLine },
   { label: "Vérification KYC", href: "/tableau-de-bord/admin/kyc", icon: BadgeCheck },
   { label: "Coupons", href: "/tableau-de-bord/admin/coupons", icon: Tag },
+  { label: "Blog", href: "/tableau-de-bord/admin/blog", icon: PenSquare },
   { label: "Journal d'audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
 ];
 

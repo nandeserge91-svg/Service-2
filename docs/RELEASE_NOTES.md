@@ -57,6 +57,24 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 - Metadata Next.js : `manifest: "/manifest.json"`, `appleWebApp` pour iOS.
 - Placeholder icônes `public/icons/` à fournir pour la production.
 
+## Phase 5.6 — V3 pilotes (abonnements, parrainage, blog)
+
+### Abonnements vendeur
+- Modèle `SellerSubscription` : plans FREE / PRO / PREMIUM avec statuts ACTIVE / CANCELLED / EXPIRED.
+- Page vendeur `/tableau-de-bord/vendeur/abonnement` : comparaison des plans, souscription, annulation.
+- Plans avec features différenciées (services illimités, badge Pro, priorité recherche, commission réduite).
+
+### Parrainage
+- Modèle `Referral` : liaison parrain → filleul, code unique par utilisateur, crédit bonus.
+- Champ `referralCode` ajouté au modèle `User` (unique, généré automatiquement).
+- Page client `/tableau-de-bord/client/parrainage` : code, lien de partage, stats, historique.
+- Bonus crédité automatiquement à la première commande du filleul.
+
+### Blog / CMS
+- Modèle `BlogPost` : slug, titre, résumé, body Markdown, tags, couverture, publication.
+- Page admin `/tableau-de-bord/admin/blog` : création, publication/dépublication, suppression.
+- Pages publiques `/blog` (listing) et `/blog/[slug]` (détail) avec SEO `generateMetadata`.
+
 ## v0.1.0 — Gel première mise en production
 
 **Date cible :** à renseigner au go-live.

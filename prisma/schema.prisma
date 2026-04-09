@@ -137,6 +137,10 @@ model User {
   offersAsBuyer    Offer[]          @relation("OfferBuyer")
   notifications    Notification[]
   auditLogs        AuditLog[]       @relation("AuditActor")
+  referralCode     String?          @unique
+  referredBy       Referral?        @relation("ReferredUser")
+  referrals        Referral[]       @relation("ReferrerUser")
+  blogPosts        BlogPost[]
 }
 
 model UserRoleAssignment {
@@ -171,9 +175,10 @@ model SellerProfile {
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  services Service[]
-  wallets  FinancialWallet[]
+  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  services      Service[]
+  wallets       FinancialWallet[]
+  subscriptions SellerSubscription[]
 }
 
 model BuyerProfile {
@@ -649,6 +654,79 @@ model Notification {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt])
+}
+
+// ——— Abonnements vendeur (Phase 5.6) ———
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PAST_DUE
+}
+
+model SellerSubscription {
+  id              String             @id @default(cuid())
+  sellerProfileId String
+  plan            SubscriptionPlan   @default(FREE)
+  status          SubscriptionStatus @default(ACTIVE)
+  priceMinor      BigInt             @default(0)
+  currency        String             @db.Char(3)
+  startDate       DateTime           @default(now())
+  endDate         DateTime?
+  cancelledAt     DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  sellerProfile SellerProfile @relation(fields: [sellerProfileId], references: [id], onDelete: Cascade)
+
+  @@index([sellerProfileId, status])
+}
+
+// ——— Parrainage (Phase 5.6) ———
+
+model Referral {
+  id              String    @id @default(cuid())
+  referrerUserId  String
+  referredUserId  String    @unique
+  code            String
+  creditMinor     BigInt    @default(0)
+  currency        String    @default("XOF") @db.Char(3)
+  credited        Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+
+  referrer User @relation("ReferrerUser", fields: [referrerUserId], references: [id], onDelete: Cascade)
+  referred User @relation("ReferredUser", fields: [referredUserId], references: [id])
+
+  @@index([referrerUserId])
+  @@index([code])
+}
+
+// ——— Blog / CMS (Phase 5.6) ———
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  summary     String?
+  body        String    @db.Text
+  coverUrl    String?
+  authorId    String
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  tags        String[]  @default([])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  author User @relation(fields: [authorId], references: [id])
+
+  @@index([published, publishedAt])
 }
 
 // ——— Coupons (Phase 5.4) ———
