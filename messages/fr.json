@@ -177,5 +177,47 @@
     "seeAll": "Tout voir →",
     "noServices": "Aucun service publié pour le moment.",
     "fromPrice": "À partir de"
+  },
+  "Dashboard": {
+    "client": {
+      "home": "Accueil",
+      "orders": "Commandes",
+      "history": "Historique",
+      "messages": "Messages",
+      "favorites": "Favoris",
+      "payments": "Paiements",
+      "disputes": "Litiges",
+      "referral": "Parrainage",
+      "notifications": "Notifications",
+      "profile": "Profil",
+      "help": "Aide"
+    },
+    "seller": {
+      "home": "Accueil",
+      "services": "Services",
+      "orders": "Commandes",
+      "messages": "Messages",
+      "revenue": "Revenus",
+      "withdrawals": "Retraits",
+      "performance": "Performances",
+      "reviews": "Avis",
+      "subscription": "Abonnement",
+      "kyc": "Vérification KYC",
+      "profile": "Profil",
+      "notifications": "Notifications",
+      "help": "Aide"
+    },
+    "admin": {
+      "overview": "Aperçu",
+      "analytics": "Analytiques",
+      "users": "Utilisateurs",
+      "services": "Services",
+      "disputes": "Litiges",
+      "withdrawals": "Retraits",
+      "kyc": "Vérification KYC",
+      "coupons": "Coupons",
+      "blog": "Blog",
+      "audit": "Journal d'audit"
+    }
   }
 }

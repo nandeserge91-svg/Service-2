@@ -3,6 +3,19 @@ import nodemailer from "nodemailer";
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "Marketplace";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
+export async function getUserLocale(userId: string): Promise<string> {
+  try {
+    const { prisma } = await import("./prisma");
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { locale: true },
+    });
+    return user?.locale ?? "fr";
+  } catch {
+    return "fr";
+  }
+}
+
 function getTransporter() {
   const host = process.env.SMTP_HOST;
   if (!host) return null;
@@ -22,9 +35,14 @@ const FROM = process.env.EMAIL_FROM ?? `${APP_NAME} <noreply@marketplace.com>`;
 
 export { layout as baseLayout };
 
-function layout(content: string): string {
+function layout(content: string, locale = "fr"): string {
+  const tagline =
+    locale === "en"
+      ? `${APP_NAME} — The African services marketplace`
+      : `${APP_NAME} — La marketplace de services pour l'Afrique`;
+
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="${locale}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   body{margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
@@ -42,7 +60,7 @@ function layout(content: string): string {
 ${content}
 </div>
 <div class="footer">
-  <p>${APP_NAME} — La marketplace de services pour l'Afrique</p>
+  <p>${tagline}</p>
 </div>
 </div></body></html>`;
 }

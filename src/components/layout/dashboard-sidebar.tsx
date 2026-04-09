@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Home, ShoppingBag, MessageCircle, Heart, CreditCard,
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
@@ -11,52 +12,52 @@ import {
 import { cn } from "@/lib/utils";
 
 interface NavItem {
-  label: string;
+  labelKey: string;
   href: string;
   icon: React.ElementType;
 }
 
 const clientNav: NavItem[] = [
-  { label: "Accueil", href: "/tableau-de-bord/client", icon: Home },
-  { label: "Commandes", href: "/tableau-de-bord/client/commandes", icon: ShoppingBag },
-  { label: "Historique", href: "/tableau-de-bord/client/historique", icon: History },
-  { label: "Messages", href: "/tableau-de-bord/client/messages", icon: MessageCircle },
-  { label: "Favoris", href: "/tableau-de-bord/client/favoris", icon: Heart },
-  { label: "Paiements", href: "/tableau-de-bord/client/paiements", icon: CreditCard },
-  { label: "Litiges", href: "/tableau-de-bord/client/litiges", icon: AlertTriangle },
-  { label: "Notifications", href: "/tableau-de-bord/client/notifications", icon: Bell },
-  { label: "Parrainage", href: "/tableau-de-bord/client/parrainage", icon: Gift },
-  { label: "Profil", href: "/tableau-de-bord/client/profil", icon: User },
-  { label: "Aide", href: "/aide/guide-client", icon: HelpCircle },
+  { labelKey: "home", href: "/tableau-de-bord/client", icon: Home },
+  { labelKey: "orders", href: "/tableau-de-bord/client/commandes", icon: ShoppingBag },
+  { labelKey: "history", href: "/tableau-de-bord/client/historique", icon: History },
+  { labelKey: "messages", href: "/tableau-de-bord/client/messages", icon: MessageCircle },
+  { labelKey: "favorites", href: "/tableau-de-bord/client/favoris", icon: Heart },
+  { labelKey: "payments", href: "/tableau-de-bord/client/paiements", icon: CreditCard },
+  { labelKey: "disputes", href: "/tableau-de-bord/client/litiges", icon: AlertTriangle },
+  { labelKey: "referral", href: "/tableau-de-bord/client/parrainage", icon: Gift },
+  { labelKey: "notifications", href: "/tableau-de-bord/client/notifications", icon: Bell },
+  { labelKey: "profile", href: "/tableau-de-bord/client/profil", icon: User },
+  { labelKey: "help", href: "/aide/guide-client", icon: HelpCircle },
 ];
 
 const sellerNav: NavItem[] = [
-  { label: "Accueil", href: "/tableau-de-bord/vendeur", icon: Home },
-  { label: "Services", href: "/tableau-de-bord/vendeur/services", icon: Store },
-  { label: "Commandes", href: "/tableau-de-bord/vendeur/commandes", icon: ShoppingBag },
-  { label: "Messages", href: "/tableau-de-bord/vendeur/messages", icon: MessageCircle },
-  { label: "Revenus", href: "/tableau-de-bord/vendeur/revenus", icon: Wallet },
-  { label: "Retraits", href: "/tableau-de-bord/vendeur/retraits", icon: ArrowDownToLine },
-  { label: "Performances", href: "/tableau-de-bord/vendeur/performances", icon: BarChart3 },
-  { label: "Avis", href: "/tableau-de-bord/vendeur/avis", icon: Star },
-  { label: "Abonnement", href: "/tableau-de-bord/vendeur/abonnement", icon: Crown },
-  { label: "Vérification KYC", href: "/tableau-de-bord/vendeur/kyc", icon: BadgeCheck },
-  { label: "Profil", href: "/tableau-de-bord/vendeur/profil", icon: User },
-  { label: "Notifications", href: "/tableau-de-bord/vendeur/notifications", icon: Bell },
-  { label: "Aide", href: "/aide/guide-vendeur", icon: HelpCircle },
+  { labelKey: "home", href: "/tableau-de-bord/vendeur", icon: Home },
+  { labelKey: "services", href: "/tableau-de-bord/vendeur/services", icon: Store },
+  { labelKey: "orders", href: "/tableau-de-bord/vendeur/commandes", icon: ShoppingBag },
+  { labelKey: "messages", href: "/tableau-de-bord/vendeur/messages", icon: MessageCircle },
+  { labelKey: "revenue", href: "/tableau-de-bord/vendeur/revenus", icon: Wallet },
+  { labelKey: "withdrawals", href: "/tableau-de-bord/vendeur/retraits", icon: ArrowDownToLine },
+  { labelKey: "performance", href: "/tableau-de-bord/vendeur/performances", icon: BarChart3 },
+  { labelKey: "reviews", href: "/tableau-de-bord/vendeur/avis", icon: Star },
+  { labelKey: "subscription", href: "/tableau-de-bord/vendeur/abonnement", icon: Crown },
+  { labelKey: "kyc", href: "/tableau-de-bord/vendeur/kyc", icon: BadgeCheck },
+  { labelKey: "profile", href: "/tableau-de-bord/vendeur/profil", icon: User },
+  { labelKey: "notifications", href: "/tableau-de-bord/vendeur/notifications", icon: Bell },
+  { labelKey: "help", href: "/aide/guide-vendeur", icon: HelpCircle },
 ];
 
 const adminNav: NavItem[] = [
-  { label: "Aperçu", href: "/tableau-de-bord/admin", icon: LayoutDashboard },
-  { label: "Analytiques", href: "/tableau-de-bord/admin/analytiques", icon: BarChart3 },
-  { label: "Utilisateurs", href: "/tableau-de-bord/admin/utilisateurs", icon: Users },
-  { label: "Services", href: "/tableau-de-bord/admin/services", icon: Store },
-  { label: "Litiges", href: "/tableau-de-bord/admin/litiges", icon: AlertTriangle },
-  { label: "Retraits", href: "/tableau-de-bord/admin/retraits", icon: ArrowDownToLine },
-  { label: "Vérification KYC", href: "/tableau-de-bord/admin/kyc", icon: BadgeCheck },
-  { label: "Coupons", href: "/tableau-de-bord/admin/coupons", icon: Tag },
-  { label: "Blog", href: "/tableau-de-bord/admin/blog", icon: PenSquare },
-  { label: "Journal d'audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
+  { labelKey: "overview", href: "/tableau-de-bord/admin", icon: LayoutDashboard },
+  { labelKey: "analytics", href: "/tableau-de-bord/admin/analytiques", icon: BarChart3 },
+  { labelKey: "users", href: "/tableau-de-bord/admin/utilisateurs", icon: Users },
+  { labelKey: "services", href: "/tableau-de-bord/admin/services", icon: Store },
+  { labelKey: "disputes", href: "/tableau-de-bord/admin/litiges", icon: AlertTriangle },
+  { labelKey: "withdrawals", href: "/tableau-de-bord/admin/retraits", icon: ArrowDownToLine },
+  { labelKey: "kyc", href: "/tableau-de-bord/admin/kyc", icon: BadgeCheck },
+  { labelKey: "coupons", href: "/tableau-de-bord/admin/coupons", icon: Tag },
+  { labelKey: "blog", href: "/tableau-de-bord/admin/blog", icon: PenSquare },
+  { labelKey: "audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
 ];
 
 const navMap: Record<string, NavItem[]> = {
@@ -65,9 +66,17 @@ const navMap: Record<string, NavItem[]> = {
   admin: adminNav,
 };
 
+const roleToNamespace: Record<string, string> = {
+  client: "client",
+  vendeur: "seller",
+  admin: "admin",
+};
+
 export function DashboardSidebar({ role }: { role: string }) {
   const pathname = usePathname();
   const items = navMap[role] ?? clientNav;
+  const ns = roleToNamespace[role] ?? "client";
+  const t = useTranslations(`Dashboard.${ns}`);
 
   return (
     <aside className="hidden w-60 shrink-0 border-r border-gray-200 bg-white lg:block">
@@ -90,7 +99,7 @@ export function DashboardSidebar({ role }: { role: string }) {
               )}
             >
               <item.icon className={cn("h-[18px] w-[18px]", active && "text-primary-600")} />
-              {item.label}
+              {t(item.labelKey)}
             </Link>
           );
         })}

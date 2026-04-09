@@ -55,7 +55,13 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
   },
-  alternates: { canonical: siteUrl },
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      fr: siteUrl,
+      en: siteUrl,
+    },
+  },
 };
 
 export const viewport: Viewport = {
