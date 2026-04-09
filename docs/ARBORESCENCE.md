@@ -78,10 +78,13 @@ Service 2/
 │   │   │       └── loading.tsx                ← Skeleton service
 │   │   ├── api/
 │   │   │   ├── push/subscribe/route.ts        ← Push subscription CRUD (6.1)
+│   │   │   ├── cron/reminders/route.ts        ← Relances automatiques cron (6.5)
 │   │   │   └── ...
 │   │   ├── blog/
 │   │   │   ├── page.tsx                       ← Liste articles publiés (5.6)
 │   │   │   └── [slug]/page.tsx                ← Article détail + SEO (5.6)
+│   │   ├── comparer/
+│   │   │   └── page.tsx                       ← Comparaison côte-à-côte (6.3)
 │   │   ├── recherche/
 │   │   │   ├── page.tsx                       ← Search + filters + generateMetadata
 │   │   │   └── loading.tsx                    ← Skeleton recherche
@@ -244,6 +247,8 @@ Service 2/
 │   │   ├── referral-actions.ts      ← Parrainage : code, application, crédit bonus (5.6)
 │   │   ├── blog-actions.ts          ← CRUD blog posts admin (5.6)
 │   │   ├── push.ts                  ← web-push VAPID + sendPushToUser (6.1)
+│   │   ├── recommendation-actions.ts ← Similar, compare, popular, recent services (6.3)
+│   │   ├── reminders.ts             ← Relances automatiques : abandon, messages, avis (6.5)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -321,3 +326,7 @@ Service 2/
 - Phase 5.5 : PWA — `public/manifest.json`, meta `manifest` + `appleWebApp` dans layout, placeholder icônes.
 - Phase 5.6 : V3 pilotes — `SellerSubscription` (FREE/PRO/PREMIUM), `Referral` (parrainage code + crédit), `BlogPost` (CMS admin + pages publiques /blog).
 - Phase 6.1 : Push notifications — `PushSubscription`, `public/sw.js`, `web-push` VAPID, `PushManager` toggle dans header, envoi push intégré à `notifications.ts`.
+- Phase 6.2 : Centre notifications unifié — API enrichie (filtres status/search), groupement par date, icônes catégorie.
+- Phase 6.3 : Recommandations — `SimilarServices` sur fiche, `/comparer` côte-à-côte, `recommendation-actions.ts`.
+- Phase 6.4 : i18n étendue — hreflang alternates, `getUserLocale()` e-mails, sidebar dashboard FR/EN.
+- Phase 6.5 : Relances automatiques — `/api/cron/reminders`, commandes abandonnées, messages non lus, avis manquants.

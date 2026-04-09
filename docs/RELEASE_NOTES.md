@@ -86,6 +86,31 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 - `ServiceWorkerRegister` : enregistrement automatique du SW au chargement du layout.
 - Variables d'environnement : `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_MAILTO`.
 
+## Phase 6.2 — Centre de notifications unifié
+
+- API `/api/notifications` enrichie : filtres `status` (all/unread/read), `search` (texte titre/body), compteurs `totalCount`/`unreadCount`.
+- Page centre de notifications refaite : groupement par date (Aujourd'hui, Hier, Cette semaine…), icônes catégoriques (commande, message, litige, avis, paiement), recherche temps réel.
+
+## Phase 6.3 — Recommandations & comparaison
+
+- Composant `SimilarServices` intégré sur chaque fiche service (même catégorie, triés par note).
+- Page `/comparer?ids=id1,id2` : comparaison côte-à-côte (packages, stats, vendeur, prix).
+- Module `recommendation-actions.ts` : `getSimilarServices`, `getServicesForComparison`, `getPopularServices`, `getRecentServices`.
+
+## Phase 6.4 — i18n étendue
+
+- SEO `hreflang` : `alternates.languages` fr/en dans le layout root metadata.
+- E-mails : helper `getUserLocale()` + layout bilingue (tagline FR/EN selon locale utilisateur).
+- Dashboard sidebar : namespace `Dashboard` (client/seller/admin) dans `messages/fr.json` et `messages/en.json`, `useTranslations` dans `DashboardSidebar`.
+
+## Phase 6.5 — Relances automatiques
+
+- Module `src/lib/reminders.ts` : 3 types de relances automatisées.
+- Commandes abandonnées (PENDING_PAYMENT > 24h) : notification in_app + push + email.
+- Messages non lus (> 48h) : notification in_app + push.
+- Avis manquants (commande terminée 3-7 jours, pas d'avis) : notification in_app + push.
+- Route cron `GET /api/cron/reminders` sécurisée par `CRON_SECRET`.
+
 ## v0.1.0 — Gel première mise en production
 
 **Date cible :** à renseigner au go-live.
