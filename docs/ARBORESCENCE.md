@@ -1,6 +1,6 @@
 # Arborescence du projet
 
-Mise à jour Phase 5 — Document de cadrage croissance (`phase-5-croissance-et-evolution.md`).
+Mise à jour Phase 5 — Implémentation jalons 5.2 (i18n), 5.3 (KYC), 5.4 (coupons), 5.5 (PWA).
 
 ```
 Service 2/
@@ -48,6 +48,7 @@ Service 2/
 │   │   │   ├── health/route.ts              ← GET santé app + DB (LB, Docker HEALTHCHECK)
 │   │   │   ├── auth/[...nextauth]/route.ts   ← Auth.js handlers
 │   │   │   ├── categories/route.ts            ← GET categories
+│   │   │   ├── cron/outbox/route.ts         ← GET file e-mails PostgreSQL (CRON_SECRET)
 │   │   │   ├── conversations/
 │   │   │   │   ├── route.ts                   ← GET conversations list
 │   │   │   │   └── [id]/
@@ -93,6 +94,8 @@ Service 2/
 │   │       │   ├── services/page.tsx          ← Modération services
 │   │       │   ├── retraits/page.tsx          ← Approbation retraits
 │   │       │   ├── audit/page.tsx             ← Journal d'audit paginé
+│   │       │   ├── kyc/page.tsx              ← Vérification KYC vendeurs (5.3)
+│   │       │   ├── coupons/page.tsx          ← Gestion coupons CRUD (5.4)
 │   │       │   └── litiges/
 │   │       │       ├── page.tsx               ← Liste litiges + KPIs
 │   │       │       └── [id]/page.tsx          ← Détail + thread + résolution
@@ -129,6 +132,7 @@ Service 2/
 │   │           ├── revenus/page.tsx           ← Dashboard revenus + KPIs
 │   │           ├── performances/page.tsx      ← Analytics vendeur CA / commandes / top services (4.49)
 │   │           ├── avis/page.tsx              ← Avis reçus + note globale (Phase 4.50)
+│   │           ├── kyc/page.tsx              ← Soumission vérification KYC vendeur (5.3)
 │   │           ├── retraits/page.tsx          ← Demande retrait + historique
 │   │           └── notifications/page.tsx     ← Re-export client notifications
 │   ├── components/
@@ -140,7 +144,7 @@ Service 2/
 │   │   │   ├── breadcrumbs.tsx                ← Fil d'Ariane réutilisable (9 pages)
 │   │   │   ├── mobile-nav.tsx
 │   │   │   ├── static-page-layout.tsx         ← Layout pages statiques (+ breadcrumbs optionnel)
-│   │   │   └── dashboard-sidebar.tsx          ← Role-based nav (+ Historique client, Analytiques admin)
+│   │   │   └── dashboard-sidebar.tsx          ← Role-based nav (+ KYC vendeur, Coupons & KYC admin)
 │   │   ├── analytics/
 │   │   │   └── analytics-bar-chart.tsx        ← Barres CSS (séries Phase 4.49)
 │   │   ├── messaging/
@@ -223,6 +227,8 @@ Service 2/
 │   │   ├── locale-actions.ts        ← setUserLocale (cookie NEXT_LOCALE)
 │   │   ├── analytics.ts             ← Agrégations historique / analytics (vendeur, admin SQL, client)
 │   │   ├── contact-actions.ts       ← Formulaire contact → outbox + rate limit IP
+│   │   ├── coupon-actions.ts        ← Validation coupon + admin CRUD + usage (5.4)
+│   │   ├── kyc-actions.ts           ← Soumission KYC vendeur + review admin (5.3)
 │   │   ├── audit.ts                 ← Service audit log
 │   │   ├── notifications.ts         ← Dispatchers événementiels (11 events)
 │   │   ├── email.ts                 ← nodemailer + 9 templates HTML
@@ -248,6 +254,9 @@ Service 2/
 │   │   └── admin-actions.test.ts     ← Tests RBAC + toutes actions admin
 │   └── types/
 │       └── next-auth.d.ts             ← Session type extensions
+├── public/
+│   ├── manifest.json                ← PWA manifest (5.5)
+│   └── icons/                       ← Icônes PWA 192×192 / 512×512 (à fournir)
 ├── Dockerfile                       ← Image prod multi-stage (Next standalone + Prisma)
 ├── .dockerignore
 ├── .env.example
@@ -291,3 +300,7 @@ Service 2/
 - Phase 4.49 : `analytics.ts` + pages vendeur `/performances`, admin `/analytiques`, client `/historique` ; bar chart léger.
 - Phase 4.50 : Onboarding checklist dynamique (vendeur + client), dashboards branchés DB, pages favoris, paiements, litiges client, avis vendeur.
 - Phase 5 : cadrage `phase-5-croissance-et-evolution.md` (V2/V3, jalons 5.1–5.6 indicatifs) — implémentation à planifier par tickets.
+- Phase 5.2 : i18n étendue aux pages publiques (Home, About, Contact, Search, Services) — 6 namespaces dans `messages/*.json`.
+- Phase 5.3 : KYC vendeur — soumission (`kyc-actions.ts`, `/vendeur/kyc`), revue admin (`/admin/kyc`), notification décision.
+- Phase 5.4 : Système de coupons — modèle Prisma `Coupon`, `couponId`/`discountMinor` sur `Order`, validation au checkout, CRUD admin (`/admin/coupons`).
+- Phase 5.5 : PWA — `public/manifest.json`, meta `manifest` + `appleWebApp` dans layout, placeholder icônes.

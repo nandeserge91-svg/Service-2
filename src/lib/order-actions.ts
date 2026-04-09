@@ -5,6 +5,7 @@ import { auth } from "./auth";
 import { prisma } from "./prisma";
 import { releaseEscrow } from "./escrow";
 import * as notif from "./notifications";
+import { validateCoupon, incrementCouponUsage } from "./coupon-actions";
 
 interface ActionResult {
   success?: boolean;
@@ -44,8 +45,22 @@ export async function createOrderFromPackage(formData: FormData): Promise<void> 
   });
   const feeBps = rule?.percentBps ?? 1000;
   const subtotal = pkg.priceMinor;
-  const fee = (subtotal * BigInt(feeBps)) / BigInt(10000);
-  const total = subtotal + fee;
+
+  const couponCode = (formData.get("couponCode") as string)?.trim() || "";
+  let discountMinor = BigInt(0);
+  let couponId: string | null = null;
+
+  if (couponCode) {
+    const cv = await validateCoupon(couponCode, subtotal, pkg.currency);
+    if (cv.valid) {
+      discountMinor = cv.discountMinor;
+      couponId = cv.couponId;
+    }
+  }
+
+  const afterDiscount = subtotal - discountMinor;
+  const fee = (afterDiscount * BigInt(feeBps)) / BigInt(10000);
+  const total = afterDiscount + fee;
 
   const deliveryDueAt = new Date();
   deliveryDueAt.setDate(deliveryDueAt.getDate() + pkg.deliveryDays);
@@ -56,9 +71,11 @@ export async function createOrderFromPackage(formData: FormData): Promise<void> 
       sellerUserId,
       serviceId: pkg.serviceId,
       servicePackageId: pkg.id,
+      couponId,
       status: "PENDING_PAYMENT",
       currency: pkg.currency,
       subtotalMinor: subtotal,
+      discountMinor,
       platformFeeMinor: fee,
       totalMinor: total,
       brief,
@@ -66,12 +83,16 @@ export async function createOrderFromPackage(formData: FormData): Promise<void> 
       events: {
         create: {
           status: "PENDING_PAYMENT",
-          note: `Commande créée — ${pkg.title}`,
+          note: `Commande créée — ${pkg.title}${couponCode ? ` (coupon ${couponCode})` : ""}`,
           actorId: session.user.id,
         },
       },
     },
   });
+
+  if (couponId) {
+    incrementCouponUsage(couponId).catch(() => {});
+  }
 
   notif.onOrderCreated({
     id: order.id,

@@ -6,7 +6,7 @@ import {
   Home, ShoppingBag, MessageCircle, Heart, CreditCard,
   AlertTriangle, Bell, User, HelpCircle, Store, BarChart3,
   Star, Wallet, ArrowDownToLine, LayoutDashboard, Users, FolderTree,
-  Settings, FileText, Shield, History,
+  Settings, FileText, Shield, History, BadgeCheck, Tag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +38,7 @@ const sellerNav: NavItem[] = [
   { label: "Retraits", href: "/tableau-de-bord/vendeur/retraits", icon: ArrowDownToLine },
   { label: "Performances", href: "/tableau-de-bord/vendeur/performances", icon: BarChart3 },
   { label: "Avis", href: "/tableau-de-bord/vendeur/avis", icon: Star },
+  { label: "Vérification KYC", href: "/tableau-de-bord/vendeur/kyc", icon: BadgeCheck },
   { label: "Profil", href: "/tableau-de-bord/vendeur/profil", icon: User },
   { label: "Notifications", href: "/tableau-de-bord/vendeur/notifications", icon: Bell },
   { label: "Aide", href: "/aide/guide-vendeur", icon: HelpCircle },
@@ -50,6 +51,8 @@ const adminNav: NavItem[] = [
   { label: "Services", href: "/tableau-de-bord/admin/services", icon: Store },
   { label: "Litiges", href: "/tableau-de-bord/admin/litiges", icon: AlertTriangle },
   { label: "Retraits", href: "/tableau-de-bord/admin/retraits", icon: ArrowDownToLine },
+  { label: "Vérification KYC", href: "/tableau-de-bord/admin/kyc", icon: BadgeCheck },
+  { label: "Coupons", href: "/tableau-de-bord/admin/coupons", icon: Tag },
   { label: "Journal d'audit", href: "/tableau-de-bord/admin/audit", icon: FileText },
 ];
 

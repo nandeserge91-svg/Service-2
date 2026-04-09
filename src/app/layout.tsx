@@ -28,6 +28,12 @@ export const metadata: Metadata = {
   description:
     "Trouvez les meilleurs prestataires de services en Afrique. Paiement sécurisé, livraison suivie, support réactif.",
   applicationName: APP_NAME,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_NAME,
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",

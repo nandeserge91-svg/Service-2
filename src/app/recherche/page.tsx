@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import { Search as SearchIcon } from "lucide-react";
 import { searchServices } from "@/lib/search";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -33,6 +34,7 @@ interface PageProps {
 
 export default async function RecherchePage({ searchParams }: PageProps) {
   const raw = await searchParams;
+  const t = await getTranslations("Search");
 
   const result = await searchServices({
     q: raw.q,
@@ -50,14 +52,13 @@ export default async function RecherchePage({ searchParams }: PageProps) {
   const breadcrumbItems = [
     { label: "Services", href: "/services" },
     ...(raw.cat ? [{ label: raw.cat, href: `/recherche?cat=${raw.cat}` }] : []),
-    { label: query || "Recherche" },
+    { label: query || t("defaultTitle") },
   ];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
       <Breadcrumbs items={breadcrumbItems} />
 
-      {/* Search bar */}
       <form className="mb-6 flex overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="relative flex-1">
           <SearchIcon className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -65,7 +66,7 @@ export default async function RecherchePage({ searchParams }: PageProps) {
             type="search"
             name="q"
             defaultValue={query}
-            placeholder="Rechercher un service…"
+            placeholder={t("placeholder")}
             className="h-12 w-full pl-12 pr-4 text-base focus:outline-none"
           />
         </div>
@@ -73,12 +74,11 @@ export default async function RecherchePage({ searchParams }: PageProps) {
           type="submit"
           className="bg-primary-600 px-6 font-medium text-white transition-colors hover:bg-primary-700"
         >
-          Rechercher
+          {t("button")}
         </button>
       </form>
 
       <div className="flex flex-col gap-6 lg:flex-row">
-        {/* Desktop sidebar */}
         <div className="hidden w-56 shrink-0 lg:block">
           <SearchFilters
             categories={result.categories}
@@ -86,9 +86,7 @@ export default async function RecherchePage({ searchParams }: PageProps) {
           />
         </div>
 
-        {/* Main content */}
         <div className="min-w-0 flex-1">
-          {/* Toolbar */}
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <Suspense>
@@ -102,10 +100,10 @@ export default async function RecherchePage({ searchParams }: PageProps) {
 
               <p className="text-sm text-gray-500">
                 <span className="font-medium text-gray-900">{result.total}</span>{" "}
-                service{result.total !== 1 ? "s" : ""}
+                {t("resultCount", { count: result.total })}
                 {query && (
                   <>
-                    {" "}pour{" "}
+                    {" "}{t("forQuery")}{" "}
                     <span className="font-medium text-gray-700">« {query} »</span>
                   </>
                 )}
@@ -121,14 +119,13 @@ export default async function RecherchePage({ searchParams }: PageProps) {
             <SearchActiveFilters />
           </Suspense>
 
-          {/* Results grid */}
           {result.services.length === 0 ? (
             <div className="mt-8">
               <EmptyState
                 icon={<SearchIcon className="h-8 w-8" />}
-                title="Aucun résultat"
-                description="Aucun service ne correspond à vos critères. Essayez d'élargir vos filtres ou d'autres mots-clés."
-                actionLabel="Réinitialiser"
+                title={t("noResults")}
+                description={t("noResultsDesc")}
+                actionLabel={t("reset")}
                 actionHref="/recherche"
               />
             </div>

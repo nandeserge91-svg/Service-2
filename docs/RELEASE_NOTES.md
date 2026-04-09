@@ -31,6 +31,32 @@ Communication utilisateur et exploitation : consigner ici chaque mise en product
 
 - Nouveau fichier `docs/phase-5-croissance-et-evolution.md` : roadmap post-MVP (alignement V2/V3 Phase 0, piliers, jalons 5.1–5.6 indicatifs).
 
+## Phase 5.2 — i18n étendue (pages publiques FR/EN)
+
+- Traductions `next-intl` étendues à **6 namespaces** : Home, About, Contact, Search, Services + shell (Header, Footer, Layout).
+- Pages publiques (accueil, à propos, contact, recherche, catalogue) entièrement traduisibles via cookie `NEXT_LOCALE`.
+- ICU MessageFormat pour les pluriels (`serviceCount`, `resultCount`) et les variables (`{appName}`).
+
+## Phase 5.3 — KYC vendeur (confiance V2)
+
+- Page `/tableau-de-bord/vendeur/kyc` : soumission document d'identité + note, affichage statut (NONE → PENDING → VERIFIED / REJECTED).
+- Page `/tableau-de-bord/admin/kyc` : liste des demandes en attente + historique, validation / refus en un clic.
+- Champs `kycDocumentUrl` et `kycNote` ajoutés à `SellerProfile` ; notification automatique au vendeur.
+- Badge vérifié activé automatiquement à la validation KYC.
+
+## Phase 5.4 — Système de coupons (monétisation V2)
+
+- Modèle Prisma `Coupon` : code unique, réduction % (basis points) et/ou fixe, devise, min commande, limite d'usage, dates de validité.
+- Champs `couponId` + `discountMinor` ajoutés au modèle `Order`.
+- Validation coupon intégrée dans `createOrderFromPackage` : la commission est calculée après déduction du coupon.
+- Page admin `/tableau-de-bord/admin/coupons` : création, activation/désactivation, suppression (si non utilisé).
+
+## Phase 5.5 — PWA (installabilité)
+
+- `public/manifest.json` : nom, couleurs, icônes 192/512, orientation portrait, standalone.
+- Metadata Next.js : `manifest: "/manifest.json"`, `appleWebApp` pour iOS.
+- Placeholder icônes `public/icons/` à fournir pour la production.
+
 ## v0.1.0 — Gel première mise en production
 
 **Date cible :** à renseigner au go-live.

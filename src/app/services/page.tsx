@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import type { Prisma } from "@prisma/client";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { hasDatabaseUrl, prisma } from "@/lib/prisma";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
@@ -21,6 +22,7 @@ type FeaturedServiceRow = Prisma.ServiceGetPayload<{
 }>;
 
 export default async function ServicesPage() {
+  const t = await getTranslations("Services");
   let categories: CategoryWithChildren[] = [];
   let featuredServices: FeaturedServiceRow[] = [];
 
@@ -49,12 +51,11 @@ export default async function ServicesPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <h1 className="mb-6 text-2xl font-bold text-gray-900">
-        Parcourir les services
+        {t("browseTitle")}
       </h1>
 
-      {/* Categories */}
       <section className="mb-10">
-        <h2 className="mb-4 text-lg font-semibold text-gray-900">Catégories</h2>
+        <h2 className="mb-4 text-lg font-semibold text-gray-900">{t("categoriesTitle")}</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {categories.map((cat) => (
             <Link key={cat.slug} href={`/recherche?cat=${cat.slug}`}>
@@ -65,7 +66,7 @@ export default async function ServicesPage() {
                 <div className="text-left">
                   <p className="font-medium text-gray-900">{cat.nameFr}</p>
                   <p className="text-xs text-gray-500">
-                    {cat.children.length} sous-catégories
+                    {t("subCategories", { count: cat.children.length })}
                   </p>
                 </div>
               </Card>
@@ -74,23 +75,20 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* Recent services */}
       <section>
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Services récents
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t("recentTitle")}</h2>
           <Link
             href="/recherche"
             className="text-sm font-medium text-primary-600 hover:text-primary-700"
           >
-            Tout voir →
+            {t("seeAll")}
           </Link>
         </div>
 
         {featuredServices.length === 0 ? (
           <p className="py-8 text-center text-sm text-gray-500">
-            Aucun service publié pour le moment.
+            {t("noServices")}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -118,7 +116,7 @@ export default async function ServicesPage() {
                       </p>
                       {minPrice != null && (
                         <p className="text-sm text-gray-500">
-                          À partir de{" "}
+                          {t("fromPrice")}{" "}
                           <span className="font-semibold text-gray-900">
                             {formatPrice(minPrice)}
                           </span>

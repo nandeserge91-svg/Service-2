@@ -165,6 +165,8 @@ model SellerProfile {
   languages        String[]  @default([])
   kycStatus        String    @default("NONE") // NONE PENDING VERIFIED REJECTED
   kycSubmittedAt   DateTime?
+  kycDocumentUrl   String?
+  kycNote          String?
   verifiedBadge    Boolean   @default(false)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
@@ -403,10 +405,12 @@ model Order {
   serviceId         String
   servicePackageId  String?
   offerId           String?
+  couponId          String?
   status            OrderStatus @default(PENDING_PAYMENT)
   currency          String      @db.Char(3)
   subtotalMinor     BigInt
   extrasMinor       BigInt      @default(0)
+  discountMinor     BigInt      @default(0)
   platformFeeMinor  BigInt      @default(0)
   totalMinor        BigInt
   brief             String?
@@ -422,6 +426,7 @@ model Order {
   service        Service        @relation(fields: [serviceId], references: [id])
   servicePackage ServicePackage? @relation(fields: [servicePackageId], references: [id])
   offer          Offer?         @relation(fields: [offerId], references: [id])
+  coupon         Coupon?        @relation(fields: [couponId], references: [id])
 
   conversation Conversation?
   payments     Payment[]
@@ -644,6 +649,29 @@ model Notification {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt])
+}
+
+// ——— Coupons (Phase 5.4) ———
+
+model Coupon {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  description   String?
+  discountBps   Int       @default(0)   // % en basis points (ex. 1500 = 15 %)
+  discountFixed BigInt    @default(0)   // montant fixe en minor (XOF centimes)
+  currency      String?   @db.Char(3)   // si fixe, devise obligatoire
+  minOrderMinor BigInt    @default(0)
+  maxUses       Int?                    // null = illimité
+  usedCount     Int       @default(0)
+  validFrom     DateTime  @default(now())
+  validTo       DateTime?
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  orders Order[]
+
+  @@index([code, active])
 }
 
 // ——— File e-mails durable (Phase 4.64) ———
